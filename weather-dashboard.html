@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <script src="https://api.open-meteo.com/v1/forecast?latitude=35.6895&longitude=139.6917&current_weather=true"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .weather { margin: 20px; }
+        .weather h2 { color: #4CAF50; }
+    </style>
+</head>
+<body>
+    <div class="weather">
+        <h2>Current Weather</h2>
+        <p id="weather-info">Loading...</p>
+    </div>
+    <script>
+        fetch('https://api.open-meteo.com/v1/forecast?latitude=35.6895&longitude=139.6917&current_weather=true')
+            .then(response => response.json())
+            .then(data => {
+                const weatherInfo = `Temperature: ${data.current_weather.temperature}°C\nWeather: ${data.current_weather.weathercode}`;
+                document.getElementById('weather-info').innerText = weatherInfo;
+            })
+            .catch(error => {
+                document.getElementById('weather-info').innerText = 'Error fetching weather data.';
+                console.error(error);
+            });
+    </script>
+</body>
+</html>
